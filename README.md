@@ -1,7 +1,7 @@
 # PySpark
 This is for PySpark knowledge Sharing Purpose only
 
-Spark Architecture
+PySpark Architecture
 
 <img width="664" height="274" alt="image" src="https://github.com/user-attachments/assets/57d6fef2-3a84-4b5f-8967-ce44b36d614d" />
 
