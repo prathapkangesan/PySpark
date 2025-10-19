@@ -1,7 +1,7 @@
 # PySpark
 This is for PySpark knowledge Sharing Purpose only
 
-PySpark Architecture
+PySpark Architecture:
 
 <img width="664" height="274" alt="image" src="https://github.com/user-attachments/assets/57d6fef2-3a84-4b5f-8967-ce44b36d614d" />
 
@@ -39,4 +39,28 @@ Data is efficiently transferred between the Python and Java processes, often usi
 
 This architecture enables PySpark to process large datasets efficiently by distributing computations across a cluster of machines.
 
+**PySpark Execution Order:**
 
+PySpark program execution follows a specific order, driven by Spark's lazy evaluation model and distributed architecture. 
+
+**Driver Program Initialization:** The PySpark driver program, typically a Python script, initiates the Spark application. It creates a SparkSession object, which is the entry point to all Spark functionalities.
+
+**Transformations (Lazy Evaluation):** When you apply transformations to a DataFrame (e.g., filter(), select(), groupBy(), join()), PySpark does not immediately execute these operations. Instead, it builds a logical execution plan, also known as a Directed Acyclic Graph (DAG), representing the sequence of operations. This lazy evaluation allows Spark to optimize the execution plan before any actual computation.
+
+**Actions (Triggering Execution):** The execution of the logical plan is triggered only when an action is called on a DataFrame. Actions include operations like show(), collect(), count(), write(), or save(). When an action is invoked:
+
+**Logical Plan to Physical Plan:** The Spark driver converts the logical DAG into a physical execution plan, which involves breaking down the operations into stages and tasks.
+
+**Task Distribution:** The driver then distributes these tasks to the Spark executors running on the cluster.
+
+**Parallel Execution:** Executors perform the computations on their assigned partitions of data in parallel.
+
+**Result Collection/Output:** After the tasks are completed by the executors, the results are either collected back to the driver (e.g., with collect()) or written to an external storage system (e.g., with write()).
+
+**In summary, the PySpark execution order is:**
+
+  * Define Transformations: Build the logical execution plan (DAG) using transformations.
+  * Trigger Action: Call an action to initiate the physical execution.
+  * Driver Orchestration: The driver optimizes the plan, distributes tasks to executors.
+  * Executor Computation: Executors process data in parallel.
+  * Result Handling: Results are collected or written.
